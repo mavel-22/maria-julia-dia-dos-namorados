@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nossa História de Amor | Maria Júlia</title>
+
+  <style>
+    :root {
+      --black: #07050a;
+      --black-soft: #120913;
+      --red: #d90429;
+      --red-dark: #8b0015;
+      --pink: #ff5fa2;
+      --pink-soft: #ffd1e6;
+      --white: #ffffff;
+      --muted: #d8cfd5;
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --shadow-pink: 0 0 35px rgba(255, 95, 162, 0.35);
+      --shadow-red: 0 0 45px rgba(217, 4, 41, 0.35);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at top left, rgba(255, 95, 162, 0.22), transparent 32%),
+        radial-gradient(circle at top right, rgba(217, 4, 41, 0.20), transparent 35%),
+        linear-gradient(145deg, #050307 0%, #12050d 42%, #07050a 100%);
+      overflow-x: hidden;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .cinema-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, rgba(255,95,162,0.16), transparent 30%),
+        linear-gradient(145deg, #040205, #12050d 60%, #040205);
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .cinema-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+      padding: 28px;
+    }
+
+    .loader-heart {
+      font-size: 4rem;
+      color: #ff5fa2;
+      animation: pulseLoader 1.4s infinite;
+      margin-bottom: 22px;
+      text-shadow: 0 0 30px rgba(255,95,162,0.5);
+    }
+
+    .loader-text {
+      color: #fff;
+      font-size: clamp(1.1rem, 4vw, 1.8rem);
+      font-family: Georgia, serif;
+      letter-spacing: 0.02em;
+      min-height: 48px;
+    }
+
+    @keyframes pulseLoader {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .floating-phrases {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .floating-phrases span {
+      position: absolute;
+      color: rgba(255,255,255,0.12);
+      font-family: Georgia, serif;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      animation: driftPhrase 22s linear infinite;
+      white-space: nowrap;
+    }
+
+    .floating-phrases span:nth-child(1) {
+      top: 12%;
+      left: -30%;
+      animation-delay: 0s;
+    }
+
+    .floating-phrases span:nth-child(2) {
+      top: 36%;
+      left: -40%;
+      animation-delay: 6s;
+    }
+
+    .floating-phrases span:nth-child(3) {
+      top: 62%;
+      left: -35%;
+      animation-delay: 12s;
+    }
+
+    .floating-phrases span:nth-child(4) {
+      top: 82%;
+      left: -45%;
+      animation-delay: 18s;
+    }
+
+    @keyframes driftPhrase {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(170vw);
+      }
+    }
+
+    .light-leak {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.34;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 95, 162, 0.18), transparent 26%),
+        radial-gradient(circle at 82% 70%, rgba(217, 4, 41, 0.16), transparent 30%);
+      animation: lightLeakMove 9s ease-in-out infinite alternate;
+    }
+
+    @keyframes lightLeakMove {
+      from { transform: translate3d(-10px, -12px, 0) scale(1); }
+      to { transform: translate3d(12px, 14px, 0) scale(1.05); }
+    }
+
+    .hearts-layer {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      color: rgba(255, 120, 180, 0.55);
+      animation: floatHeart linear forwards;
+      text-shadow: 0 0 18px rgba(255, 95, 162, 0.6);
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5) rotate(18deg); opacity: 0; }
+    }
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at center, rgba(255, 95, 162, 0.22), transparent 36%),
+        linear-gradient(160deg, #020103, #16050d 55%, #020103);
+      transition: opacity 900ms ease, transform 900ms ease, visibility 900ms ease;
+    }
+
+    .intro.hidden {
+      opacity: 0;
+      transform: scale(1.04);
+      visibility: hidden;
+    }
+
+    .intro-card {
+      width: min(680px, 100%);
+      padding: 34px 24px;
+      text-align: center;
+      border: 1px solid var(--glass-border);
+      border-radius: 34px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow-pink), inset 0 0 40px rgba(255,255,255,0.03);
+      backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      top: -90px;
+      right: -80px;
+      background: rgba(255, 95, 162, 0.28);
+      filter: blur(20px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      color: var(--pink-soft);
+      background: rgba(255,255,255,0.06);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .intro h1,
+    .hero h1,
+    .section-title {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+
+    .intro h1 {
+      font-size: clamp(2.4rem, 11vw, 5.4rem);
+      margin-bottom: 18px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, #ffd1e6, #ff5fa2, #d90429);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 26px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      color: var(--white);
+      border-radius: 999px;
+      padding: 15px 22px;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 12px 35px rgba(217, 4, 41, 0.35);
+      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+      font-weight: 800;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 45px rgba(255, 95, 162, 0.42);
+      filter: brightness(1.08);
+      outline: none;
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 3;
+    }
+
+    .section {
+      width: min(1120px, calc(100% - 34px));
+      margin: 0 auto;
+      padding: 78px 0;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding-top: 42px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 12vw, 7rem);
+      margin: 16px 0;
+    }
+
+    .hero p,
+    .lead {
+      color: var(--muted);
+      font-size: clamp(1rem, 2.3vw, 1.25rem);
+      line-height: 1.8;
+    }
+
+    .love-counter {
+      margin-top: 26px;
+      padding: 18px 22px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.03);
+    }
+
+    .counter-label {
+      color: var(--pink-soft);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+    }
+
+    .premium-counter {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .premium-counter span {
+      display: grid;
+      place-items: center;
+      padding: 12px 8px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.11);
+    }
+
+    .premium-counter strong {
+      font-size: clamp(1.35rem, 5vw, 2.3rem);
+      line-height: 1;
+    }
+
+    .premium-counter small {
+      margin-top: 5px;
+      color: var(--pink-soft);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .counter-time {
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .photo-frame {
+      border-radius: 36px;
+      padding: 10px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: var(--shadow-red);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-placeholder {
+      min-height: 470px;
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+      color: rgba(255,255,255,0.74);
+      background:
+        linear-gradient(145deg, rgba(217, 4, 41, 0.30), rgba(255, 95, 162, 0.12)),
+        radial-gradient(circle at top, rgba(255,255,255,0.18), transparent 35%),
+        #1a0710;
+    }
+
+    .floating-note {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      right: 16px;
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(0,0,0,0.52);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .handwriting {
+      font-family: 'Brush Script MT', cursive;
+      letter-spacing: 0.01em;
+    }
+
+    .quote {
+      margin-top: 22px;
+      padding: 22px;
+      border-left: 3px solid var(--pink);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.25rem, 4vw, 2rem);
+      line-height: 1.35;
+      box-shadow: inset 0 0 28px rgba(255,95,162,0.06);
+    }
+
+    .section-head {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 7vw, 4.6rem);
+      margin-bottom: 14px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .card {
+      border: 1px solid var(--glass-border);
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.035));
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.24);
+      backdrop-filter: blur(16px);
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-top: 12px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .mini-card {
+      min-height: 148px;
+      border-radius: 24px;
+      padding: 18px;
+      display: flex;
+      align-items: flex-end;
+      color: #fff;
+      font-weight: 800;
+      background: linear-gradient(145deg, rgba(217,4,41,0.35), rgba(255,95,162,0.16));
+      border: 1px solid rgba(255,255,255,0.13);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.03);
+    }
+
+    .reveal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .reveal {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.07);
+      color: #fff;
+      padding: 20px;
+      cursor: pointer;
+      min-height: 134px;
+      transition: transform 220ms ease, background 220ms ease;
+    }
+
+    .reveal:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.11);
+    }
+
+    .reveal strong {
+      display: block;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: var(--pink-soft);
+    }
+
+    .reveal span {
+      color: var(--muted);
+      line-height: 1.6;
+      display: none;
+    }
+
+    .reveal.active span {
+      display: block;
+      animation: fadeIn 450ms ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .secret-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .secret-card {
+      min-height: 180px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      color: #fff;
+      padding: 24px;
+      cursor: pointer;
+      transition: transform 260ms ease, box-shadow 260ms ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      font-weight: 800;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.22);
+    }
+
+    .secret-card span {
+      font-size: 2rem;
+    }
+
+    .secret-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 45px rgba(255,95,162,0.22);
+    }
+
+    .secret-message {
+      margin-top: 22px;
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: #fff;
+      line-height: 1.8;
+      display: none;
+      animation: fadeIn 500ms ease;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+    }
+
+    .film-strip {
+      width: 100%;
+      height: 20px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,0.08) 0 20px,
+          transparent 20px 34px
+        );
+      opacity: 0.35;
+    }
+
+    .gallery-main,
+    .gallery-side {
+      display: grid;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      position: relative;
+      min-height: 260px;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background:
+        linear-gradient(145deg, rgba(255,95,162,0.22), rgba(217,4,41,0.17)),
+        #170710;
+    }
+
+    .gallery-main .gallery-item {
+      min-height: 540px;
+    }
+
+    .gallery-item::before {
+      content: "Substituir por foto";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,0.55);
+      font-weight: 800;
+    }
+
+    .caption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      line-height: 1.45;
+    }
+
+    .feelings-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .feeling-card {
+      min-height: 220px;
+      padding: 24px;
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,95,162,0.08));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: transform 280ms ease, box-shadow 280ms ease;
+    }
+
+    .feeling-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(255,95,162,0.18);
+    }
+
+    .feeling-card span {
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      color: var(--pink-soft);
+      margin-bottom: 12px;
+    }
+
+    .feeling-card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(var(--pink), var(--red));
+      opacity: 0.8;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 54px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 7px;
+      top: 6px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 0 25px rgba(255,95,162,0.6);
+    }
+
+    .letter {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(26px, 5vw, 50px);
+    }
+
+    .letter::before {
+      content: "❤️";
+      position: absolute;
+      right: 24px;
+      top: 14px;
+      font-size: 5rem;
+      opacity: 0.09;
+      transform: rotate(12deg);
+    }
+
+    .letter p {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #f3e8ee;
+      font-size: clamp(1.08rem, 3vw, 1.35rem);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .future-card {
+      padding: 24px;
+      min-height: 130px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,95,162,0.09));
+      border: 1px solid rgba(255,255,255,0.13);
+      display: flex;
+      align-items: flex-end;
+      font-weight: 900;
+    }
+
+    .final-surprise {
+      text-align: center;
+    }
+
+    .replay-container {
+      margin: 30px 0 18px;
+    }
+
+    .replay-btn {
+      min-width: 280px;
+    }
+
+    .ultimate-message {
+      margin-top: 26px;
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-family: Georgia, serif;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      line-height: 1.7;
+      color: #fff;
+      display: none;
+      white-space: pre-line;
+      animation: fadeIn 800ms ease;
+    }
+
+    .full-gallery-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      padding: 18px;
+      background: rgba(0,0,0,0.76);
+      backdrop-filter: blur(16px);
+      overflow-y: auto;
+    }
+
+    .full-gallery-modal.show {
+      display: block;
+      animation: fadeIn 400ms ease;
+    }
+
+    .full-gallery-panel {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 34px);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at top left, rgba(255,95,162,0.18), transparent 32%),
+        linear-gradient(145deg, rgba(18,9,19,0.96), rgba(7,5,10,0.98));
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+    }
+
+    .full-gallery-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 26px;
+    }
+
+    .full-gallery-header h2 {
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+
+    .full-gallery-header p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .close-gallery {
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .full-gallery-grid {
+      column-count: 4;
+      column-gap: 16px;
+    }
+
+    .full-gallery-photo {
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.13);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.32);
+    }
+
+    .full-gallery-photo img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 500ms ease, filter 500ms ease;
+    }
+
+    .full-gallery-photo:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.88) saturate(1.08);
+    }
+
+    .full-gallery-photo span {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.56);
+      color: #fff;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+
+    .full-gallery-photo:hover span,
+    .full-gallery-photo:active span {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    .photo-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.86);
+      backdrop-filter: blur(18px);
+    }
+
+    .photo-lightbox.show {
+      display: flex;
+      animation: fadeIn 260ms ease;
+    }
+
+    .photo-lightbox-content {
+      position: relative;
+      width: min(980px, 100%);
+      max-height: 92vh;
+      display: grid;
+      gap: 14px;
+      place-items: center;
+    }
+
+    .photo-lightbox img {
+      max-width: 100%;
+      max-height: min(78vh, 820px);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 30px 95px rgba(0,0,0,0.68), 0 0 60px rgba(255,95,162,0.16);
+      object-fit: contain;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .photo-lightbox-caption {
+      width: min(760px, 100%);
+      padding: 14px 18px;
+      border-radius: 20px;
+      text-align: center;
+      color: #fff;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px);
+    }
+
+    .photo-lightbox-close,
+    .photo-lightbox-nav {
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      background: rgba(0,0,0,0.50);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .photo-lightbox-close:hover,
+    .photo-lightbox-nav:hover {
+      transform: scale(1.05);
+      background: rgba(255,95,162,0.26);
+    }
+
+    .photo-lightbox-close {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      font-size: 2rem;
+      line-height: 1;
+      z-index: 2;
+    }
+
+    .photo-lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      font-size: 2.2rem;
+      line-height: 1;
+      z-index: 2;
+    }
+
+    .photo-lightbox-nav:hover {
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .photo-lightbox-prev { left: -8px; }
+    .photo-lightbox-next { right: -8px; }
+
+    @media (max-width: 620px) {
+      .photo-lightbox {
+        padding: 12px;
+      }
+
+      .photo-lightbox img {
+        max-height: 72vh;
+        border-radius: 20px;
+      }
+
+      .photo-lightbox-close {
+        top: 6px;
+        right: 6px;
+      }
+
+      .photo-lightbox-nav {
+        width: 44px;
+        height: 44px;
+        font-size: 1.8rem;
+      }
+
+      .photo-lightbox-prev { left: 4px; }
+      .photo-lightbox-next { right: 4px; }
+    }
+
+
+
+    .gallery-intro {
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: clamp(1rem, 2.3vw, 1.18rem);
+    }
+
+    .photo-lightbox-final {
+      display: none;
+      margin-top: 4px;
+      border: 0;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 999px;
+      padding: 13px 18px;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 12px 35px rgba(217, 4, 41, 0.32);
+      font-weight: 800;
+    }
+
+    .photo-lightbox-final.show {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .final {
+      text-align: center;
+      padding-bottom: 110px;
+    }
+
+    .final .big-love {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.4rem, 15vw, 9rem);
+      letter-spacing: -0.06em;
+      margin: 26px 0;
+      text-shadow: 0 0 45px rgba(255,95,162,0.38);
+    }
+
+    .final-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .music-player {
+      position: fixed;
+      z-index: 20;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      max-width: 520px;
+      margin: 0 auto;
+      display: none;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 24px;
+      background: rgba(0,0,0,0.62);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+    }
+
+    .music-player.show {
+      display: flex;
+    }
+
+    .music-cover {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 0 28px rgba(255,95,162,0.35);
+      font-weight: 900;
+      transition: transform 300ms linear;
+    }
+
+    .music-cover.playing {
+      animation: vinylSpin 3s linear infinite;
+    }
+
+    @keyframes vinylSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .music-cover {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 0 28px rgba(255,95,162,0.35);
+      font-weight: 900;
+    }
+
+    .music-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .music-info strong {
+      display: block;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .music-info span {
+      display: block;
+      color: var(--pink-soft);
+      font-size: 0.76rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    .music-progress {
+      height: 4px;
+      margin-top: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+    }
+
+    .music-progress div {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--pink), var(--red));
+    }
+
+    .music-player button {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      border-radius: 999px;
+      border: 0;
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      cursor: pointer;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .section {
+        width: min(100% - 28px, 680px);
+        padding: 62px 0;
+      }
+
+      .hero-grid,
+      .split,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 22px;
+      }
+
+      .photo-placeholder {
+        min-height: 380px;
+      }
+
+      .mini-grid,
+      .future-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .reveal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-main .gallery-item {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .full-gallery-grid {
+        column-count: 2;
+      }
+
+      .secret-grid,
+      .feelings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .full-gallery-grid {
+        column-count: 1;
+      }
+
+      .full-gallery-header {
+        flex-direction: column;
+      }
+
+      .close-gallery {
+        align-self: flex-end;
+      }
+
+      .intro-card {
+        padding: 28px 18px;
+      }
+
+      .section {
+        width: min(100% - 22px, 520px);
+      }
+
+      .hero-actions,
+      .final-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .mini-grid,
+      .future-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 21px;
+      }
+    }
+  .real-photo {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      border-radius: 28px;
+    }
+
+    .photo-placeholder:has(.real-photo) {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .gallery-item.has-photo::before {
+      display: none;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      transition: transform 500ms ease, filter 500ms ease;
+    }
+
+    .gallery-item.photo-focus img {
+      transform: scale(1.08);
+      filter: brightness(0.82) saturate(1.12);
+    }
+
+    .gallery-item.photo-focus .caption {
+      background: rgba(0,0,0,0.72);
+      transform: translateY(-6px);
+    }
+
+  
+  </style>
+</head>
+<body class="locked">
+  <div class="cinema-loader" id="cinemaLoader">
+    <div class="loader-content">
+      <div class="loader-heart">❤</div>
+      <div class="loader-text" id="loaderText"></div>
+    </div>
+  </div>
+
+  <div class="noise"></div>
+  <div class="hearts-layer" id="heartsLayer"></div>
+  <div class="light-leak"></div>
+
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <div class="eyebrow">Uma surpresa feita só para você</div>
+      <h1>Para a mulher que <span class="gradient-text">mudou a minha vida</span></h1>
+      <p>Antes de continuar, respire fundo. Essa página foi criada para guardar um pedacinho do meu amor por você.</p>
+      <button class="btn" id="openSurprise">Abrir minha surpresa ❤️</button>
+    </div>
+  </div>
+
+  <div class="music-player" id="musicPlayer">
+    <div class="music-cover" id="musicCover">♪</div>
+    <div class="music-info">
+      <strong>Nossa música</strong>
+      <span>Toque para deixar o momento mais especial</span>
+      <div class="music-progress"><div id="musicProgressBar"></div></div>
+    </div>
+    <button id="toggleMusic" aria-label="Tocar ou pausar música">♪</button>
+  </div>
+
+  <audio id="loveMusic" loop>
+    <!-- Troque o arquivo abaixo pela música de vocês -->
+    <source src="assets/musica/nossa-musica.mp3" type="audio/mpeg" />
+  </audio>
+
+  <main class="page" id="topo">
+    <section class="section hero" id="inicio">
+      <div class="hero-grid">
+        <div class="fade-up">
+          <div class="eyebrow">Capítulo especial</div>
+          <h1>Oi, meu amor.</h1>
+          <p>Eu pensei em muitas formas de te surpreender. Pensei em flores, presentes, mensagens e lembranças... mas nada parecia suficiente para representar tudo o que você significa para mim.</p>
+          <p class="lead" style="margin-top: 14px;">Então eu resolvi criar algo diferente: um lugar onde a nossa história pudesse ser lembrada sempre que você quisesse sentir o quanto é amada.</p>
+          <div class="quote handwriting">Essa não é só uma página. É um cantinho onde guardei um pouco do meu amor por você.</div>
+          <div class="love-counter">
+            <div class="counter-label">Estamos escrevendo essa história há:</div>
+            <div class="counter-time premium-counter" id="loveCounter">
+              <span><strong>0</strong><small>anos</small></span>
+              <span><strong>0</strong><small>meses</small></span>
+              <span><strong>0</strong><small>dias</small></span>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn" href="#historia">Começar nossa história</a>
+            <button class="btn secondary" id="playFromHero">Tocar nossa música</button>
+          </div>
+        </div>
+
+        <div class="photo-frame fade-up">
+          <div class="photo-placeholder">
+            <div>
+              <img src="assets/fotos/foto-principal.jpg" data-photo="principal" alt="Nossa foto principal" class="real-photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<strong>Foto principal de vocês</strong><br />Coloque aqui: assets/fotos/foto-principal.jpg';" />
+            </div>
+          </div>
+          <div class="floating-note">Você virou aquela parte da vida que eu gosto de lembrar com sorriso no rosto.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="historia">
+      <div class="split">
+        <div class="photo-frame fade-up">
+          <div class="photo-placeholder">
+            <div>
+              <img src="assets/fotos/primeira-lembranca.jpg" data-photo="primeiraLembranca" alt="Primeira lembrança do casal" class="real-photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<strong>Primeira lembrança</strong><br />Coloque aqui: assets/fotos/primeira-lembranca.jpg';" />
+            </div>
+          </div>
+        </div>
+        <div class="card fade-up">
+          <div class="eyebrow">O começo</div>
+          <h2 class="section-title">Tudo começou de um jeito que talvez nem a gente imaginasse...</h2>
+          <p>Às vezes, a vida aproxima duas pessoas sem avisar o tamanho da importância que uma terá na vida da outra.</p>
+          <p>No começo, talvez fosse só uma conversa, um olhar, uma curiosidade, uma troca simples. Mas, de algum jeito, algo em você começou a ficar diferente para mim.</p>
+          <p>O seu jeito, sua presença, sua risada, suas palavras... pequenas coisas que foram ocupando espaço no meu coração sem pedir licença.</p>
+          <div class="quote">O amor nem sempre chega fazendo barulho. Às vezes ele chega devagar... e muda tudo.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="floating-phrases">
+      <span>Você é meu lugar favorito ❤️</span>
+      <span>Eu escolheria você de novo.</span>
+      <span>Obrigado por existir.</span>
+      <span>Seu sorriso ilumina meus dias.</span>
+    </div>
+
+    <section class="section" id="encanto">
+      <div class="section-head fade-up">
+        <div class="eyebrow">Meu lugar favorito</div>
+        <h2 class="section-title">Em algum momento, estar com você virou a melhor parte dos meus dias</h2>
+        <p class="lead">Com o tempo, eu fui percebendo que a felicidade não estava apenas nos grandes acontecimentos. Ela estava nas mensagens inesperadas, nos abraços, nas brincadeiras bobas e na paz que é ter você por perto.</p>
+      </div>
+
+      <div class="mini-grid fade-up">
+        <div class="mini-card">Seu sorriso virou meu detalhe favorito.</div>
+        <div class="mini-card">Seu abraço virou meu lugar seguro.</div>
+        <div class="mini-card">Sua presença virou minha paz.</div>
+        <div class="mini-card">Nosso amor virou minha melhor escolha.</div>
+      </div>
+    </section>
+
+    <section class="section" id="detalhes">
+      <div class="section-head fade-up">
+        <div class="eyebrow">Clique e descubra</div>
+        <h2 class="section-title">Coisas em você que talvez você nem perceba, mas que eu amo</h2>
+        <p class="lead">Pequenas partes suas que tornam tudo mais bonito para mim.</p>
+      </div>
+
+      <div class="reveal-grid fade-up">
+        <button class="reveal">
+          <strong>Seu jeito</strong>
+          <span>Eu amo o seu jeito único de ser. O jeito como você fala, como reage, como demonstra carinho e como consegue ser especial até nas coisas mais simples.</span>
+        </button>
+        <button class="reveal">
+          <strong>Seu sorriso</strong>
+          <span>Seu sorriso muda meu humor, ilumina meus pensamentos e me lembra que existem coisas lindas demais no mundo.</span>
+        </button>
+        <button class="reveal">
+          <strong>Sua presença</strong>
+          <span>Quando você está por perto, tudo parece melhor. Não porque tudo fica perfeito, mas porque estar com você torna qualquer momento mais leve.</span>
+        </button>
+        <button class="reveal">
+          <strong>Seu coração</strong>
+          <span>Eu admiro a pessoa que você é. Seu coração, sua essência e sua forma de existir fazem com que eu tenha cada vez mais certeza do quanto sou feliz por ter você.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section hidden-letters" id="cartinhas">
+      <div class="section-head fade-up">
+        <div class="eyebrow">Pequenas surpresas</div>
+        <h2 class="section-title">Abra quando precisar sentir meu carinho</h2>
+      </div>
+
+      <div class="secret-grid fade-up">
+        <button class="secret-card" data-secret="saudade">
+          <span>💌</span>
+          Abra quando sentir saudade
+        </button>
+
+        <button class="secret-card" data-secret="triste">
+          <span>❤️</span>
+          Abra quando estiver triste
+        </button>
+
+        <button class="secret-card" data-secret="amor">
+          <span>✨</span>
+          Abra quando quiser sorrir
+        </button>
+      </div>
+
+      <div class="secret-message" id="secretMessage"></div>
+    </section>
+
+    <section class="section" id="galeria">
+      <div class="section-head fade-up">
+        <div class="eyebrow">Memórias</div>
+        <h2 class="section-title">Alguns momentos que moram em mim</h2>
+        <p class="lead">Cada foto aqui guarda mais do que uma imagem. Guarda um sentimento, uma lembrança, uma risada, uma fase e um pedacinho nosso.</p>
+      </div>
+
+      <div class="gallery fade-up">
+        <div class="film-strip fade-up"></div>
+
+        <div class="gallery-main">
+          <div class="gallery-item has-photo">
+              <img src="assets/fotos/galeria-1.jpg" data-photo="galeria1" alt="Galeria 1" onerror="this.style.display='none'" />
+              <div class="caption">O dia em que eu percebi que estar com você era diferente.</div>
+            </div>
+        </div>
+        <div class="gallery-side">
+          <div class="gallery-item has-photo">
+              <img src="assets/fotos/galeria-2.jpg" data-photo="galeria2" alt="Galeria 2" onerror="this.style.display='none'" />
+              <div class="caption">Uma lembrança simples, mas cheia de significado.</div>
+            </div>
+          <div class="gallery-item has-photo">
+              <img src="assets/fotos/galeria-3.jpg" data-photo="galeria3" alt="Galeria 3" onerror="this.style.display='none'" />
+              <div class="caption">Um momento que eu viveria de novo mil vezes.</div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sentimentos">
+      <div class="section-head fade-up">
+        <div class="eyebrow">Quando penso em você</div>
+        <h2 class="section-title">Existem sentimentos que sempre aparecem</h2>
+        <p class="lead">Cada um deles me lembra uma parte linda de ter você na minha vida.</p>
+      </div>
+
+      <div class="feelings-grid fade-up">
+        <div class="feeling-card"><span>Paz</span><p>Porque sua presença acalma partes de mim que o mundo às vezes agita.</p></div>
+        <div class="feeling-card"><span>Saudade</span><p>Porque até pouco tempo longe já faz meu coração querer você por perto.</p></div>
+        <div class="feeling-card"><span>Felicidade</span><p>Porque ao seu lado até os dias simples ganham outro brilho.</p></div>
+        <div class="feeling-card"><span>Admiração</span><p>Porque quanto mais eu te conheço, mais eu gosto da pessoa que você é.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="linha-do-tempo">
+      <div class="section-head fade-up">
+        <div class="eyebrow">Nossa jornada</div>
+        <h2 class="section-title">Nossa história, passo por passo</h2>
+        <p class="lead">Nem toda história precisa começar perfeita para ser linda. A nossa foi sendo construída em detalhes, escolhas, cuidado e sentimentos que cresceram com o tempo.</p>
+      </div>
+
+      <div class="timeline fade-up">
+        <div class="timeline-item card">
+          <div class="timeline-dot"></div>
+          <h3>Primeiro capítulo</h3>
+          <p>Foi quando nossos caminhos se cruzaram. Talvez a gente ainda não soubesse, mas ali começava algo que um dia seria muito importante.</p>
+        </div>
+        <div class="timeline-item card">
+          <div class="timeline-dot"></div>
+          <h3>Primeiras conversas</h3>
+          <p>Foi quando eu comecei a gostar não só da sua beleza, mas da sua companhia, do seu jeito e da sensação boa que era falar com você.</p>
+        </div>
+        <div class="timeline-item card">
+          <div class="timeline-dot"></div>
+          <h3>Quando virou amor</h3>
+          <p>Não sei dizer o instante exato. Talvez tenha sido aos poucos. Mas em algum momento, eu olhei para você e senti: é ela.</p>
+        </div>
+        <div class="timeline-item card">
+          <div class="timeline-dot"></div>
+          <h3>Hoje</h3>
+          <p>Hoje eu olho para tudo o que vivemos e sinto gratidão por cada abraço, cada riso, cada aprendizado e cada pedacinho da nossa história.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="carta">
+      <div class="card letter fade-up">
+        <div class="eyebrow">Carta principal</div>
+        <h2 class="section-title">Uma carta para você</h2>
+        <p>Meu amor,</p>
+        <p>Eu queria encontrar um jeito bonito de colocar em palavras tudo o que sinto por você, mas a verdade é que algumas coisas parecem grandes demais para caber em uma frase.</p>
+        <p>Você se tornou uma das partes mais especiais da minha vida.</p>
+        <p>Com você, eu aprendi que amar não é apenas dizer “eu te amo”. É cuidar, escolher, respeitar, admirar, sentir saudade, fazer planos e querer o bem do outro até nos detalhes mais simples.</p>
+        <p>Eu não criei essa página para ser apenas bonita. Eu criei para que você pudesse sentir, em cada detalhe, o quanto você é importante para mim.</p>
+        <p>Quando você estiver feliz, quero que abra isso e sorria ainda mais. Quando estiver com saudade, quero que lembre que meu carinho está aqui. Quando tiver um dia difícil, quero que essa página te abrace de alguma forma e te lembre que você é amada.</p>
+        <p>E se um dia faltar palavra, que cada foto, cada frase e cada detalhe daqui fale por mim:</p>
+        <p><strong>Eu amo você. E amo a história que estamos construindo juntos.</strong></p>
+        <p>Com todo o meu amor,<br /><span data-seu-nome>Vinicio Mavel</span></p>
+      </div>
+    </section>
+
+    <section class="section" id="futuro">
+      <div class="section-head fade-up">
+        <div class="eyebrow">O que ainda vem</div>
+        <h2 class="section-title">E o mais bonito é que ainda temos muito para viver</h2>
+        <p class="lead">O que já vivemos é especial, mas o que ainda podemos viver também me encanta. Não preciso saber exatamente como será cada capítulo do futuro. Só sei que, se for com você, já existe algo bonito esperando por nós.</p>
+      </div>
+
+      <div class="future-grid fade-up">
+        <div class="future-card">Novas viagens</div>
+        <div class="future-card">Novas fotos</div>
+        <div class="future-card">Novas conquistas</div>
+        <div class="future-card">Novas risadas</div>
+        <div class="future-card">Novos sonhos</div>
+        <div class="future-card">Mais nós dois</div>
+      </div>
+    </section>
+
+    <section class="section" id="ultima-surpresa">
+      <div class="card fade-up final-surprise">
+        <div class="eyebrow">Última surpresa</div>
+        <h2 class="section-title">Ainda não acabou...</h2>
+        <p class="lead">Existe uma última coisa que eu quero que você saiba.</p>
+
+        <button class="btn" id="openFinalMessage">Abrir última surpresa ❤️</button>
+
+        <div class="ultimate-message" id="ultimateMessage">
+          E se algum dia você esquecer o quanto é amada,
+          volte aqui.
+
+          Porque em cada detalhe dessa página existe um pedacinho do meu coração lembrando você disso.
+        </div>
+      </div>
+    </section>
+
+    <section class="section final" id="final">
+      <div class="fade-up">
+        <div class="eyebrow">Antes de fechar</div>
+        <h2 class="section-title">Quero que você guarde uma coisa:</h2>
+        <div class="big-love gradient-text">Eu te amo</div>
+        <p class="lead">Não só hoje. Não só no Dia dos Namorados. Mas nos dias simples, nos dias difíceis, nos dias bonitos, nos dias comuns e em todos aqueles momentos em que talvez eu não consiga demonstrar perfeitamente, mas sinto profundamente.</p>
+        <div class="quote">E sempre que quiser lembrar disso, essa página vai estar aqui. ❤️</div>
+        <div class="replay-container">
+          <button class="btn replay-btn" id="replayStory">Reviver nossa história ❤️</button>
+        </div>
+
+        <div class="final-actions">
+          <a class="btn" href="#inicio">Rever nossa história</a>
+          <a class="btn secondary" href="#galeria">Abrir galeria</a>
+          <button class="btn secondary" id="openFullGalleryBtn">Ver galeria completa</button>
+          <a class="btn secondary" href="#carta">Ler a carta de novo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="full-gallery-modal" id="fullGalleryModal">
+    <div class="full-gallery-panel">
+      <div class="full-gallery-header">
+        <div>
+          <div class="eyebrow">Galeria especial</div>
+          <h2>Cada foto, uma lembrança.<br>Cada lembrança, um motivo para sorrir.</h2>
+          <p class="gallery-intro">
+            88 momentos que transformaram dias comuns em memórias inesquecíveis.<br>
+            Passe por elas sem pressa, meu amor. Porque essa história ainda está sendo escrita. ❤️
+          </p>
+        </div>
+        <button class="close-gallery" id="closeFullGalleryBtn">×</button>
+      </div>
+
+      <div class="full-gallery-grid" id="fullGalleryGrid"></div>
+    </div>
+  </div>
+
+
+  <div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+    <div class="photo-lightbox-content">
+      <button class="photo-lightbox-close" id="closePhotoLightbox" aria-label="Fechar foto ampliada">×</button>
+      <button class="photo-lightbox-nav photo-lightbox-prev" id="prevPhotoLightbox" aria-label="Foto anterior">‹</button>
+      <img id="photoLightboxImage" src="" alt="Foto ampliada" />
+      <button class="photo-lightbox-nav photo-lightbox-next" id="nextPhotoLightbox" aria-label="Próxima foto">›</button>
+      <div class="photo-lightbox-caption" id="photoLightboxCaption"></div>
+      <button class="photo-lightbox-final" id="continueStoryFromGallery">❤️ Continuar nossa história</button>
+    </div>
+  </div>
+
+  <script>
+    /*
+      ÁREA PRINCIPAL DE PERSONALIZAÇÃO
+      Troque apenas estes dados primeiro.
+    */
+    const CONFIG_AMOR = {
+      nomeDela: 'Maria Júlia',
+      seuNome: 'Vinicio Mavel',
+      dataInicio: '2025-12-19T00:00:00',
+      musica: 'assets/musica/nossa-musica.mp3',
+      fotos: {
+        principal: 'assets/fotos/foto-principal.jpg',
+        primeiraLembranca: 'assets/fotos/primeira-lembranca.jpg',
+        galeria1: 'assets/fotos/galeria-1.jpg',
+        galeria2: 'assets/fotos/galeria-2.jpg',
+        galeria3: 'assets/fotos/galeria-3.jpg'
+      },
+
+      /*
+        GALERIA COMPLETA
+        Fotos: coloque arquivos em assets/fotos/album/foto-001.jpg até foto-088.jpg
+      */
+      galeriaCompleta: [
+        { src: 'assets/fotos/album/foto-001.jpg', legenda: "Nossa primeira sequência de fotos descontraídos na sua casa" },
+        { src: 'assets/fotos/album/foto-002.jpg', legenda: "Doidinha + Doidinho e meio kkkkk" },
+        { src: 'assets/fotos/album/foto-003.jpg', legenda: "Nesse dia estava tão confortável com você" },
+        { src: 'assets/fotos/album/foto-004.jpg', legenda: "Não teve jeito... Tive que rir das suas palhaçadas kkkk" },
+        { src: 'assets/fotos/album/foto-005.jpg', legenda: "Somos palhaços juntos 🤡🤡" },
+        { src: 'assets/fotos/album/foto-006.jpg', legenda: "Tinha que ter um beijo para finalizar a sequência né... (Repara na expressão que rimos muito quando vimos a foto kkkk)" },
+        { src: 'assets/fotos/album/foto-007.jpg', legenda: "O Nosso primeiro date a gente nunca esquece... 🍦🍦" },
+        { src: 'assets/fotos/album/foto-008.jpg', legenda: "O Nosso primeiro piquenique 🧺" },
+        { src: 'assets/fotos/album/foto-009.jpg', legenda: "Uma foto descontraída sem você pedir, você amou isso ☺️" },
+        { src: 'assets/fotos/album/foto-010.jpg', legenda: "Outra foto descontraída sem você pedir, você amou isso ☺️" },
+        { src: 'assets/fotos/album/foto-011.jpg', legenda: "Eu sendo seu melhor fotógrafo e você toda feliz. Estava tão linda nesse dia meu amor ❤️" },
+        { src: 'assets/fotos/album/foto-012.jpg', legenda: "Não aguentou de tanta felicidade." },
+        { src: 'assets/fotos/album/foto-013.jpg', legenda: "O fotógrafo não aguentou e resolveu aparecer com a gata kkk Até que ficamos bonitos na foto 🤗" },
+        { src: 'assets/fotos/album/foto-014.jpg', legenda: "Cheirou meu pé e..." },
+        { src: 'assets/fotos/album/foto-015.jpg', legenda: "não resistiu ao cheiro bom e quis até comer meu pé kkkk" },
+        { src: 'assets/fotos/album/foto-016.jpg', legenda: "Saiiii, o pé é meu kkkk" },
+        { src: 'assets/fotos/album/foto-017.jpg', legenda: "Minha gatinha comportada." },
+        { src: 'assets/fotos/album/foto-018.jpg', legenda: "Foi ai que percebi o quanto sou feliz ao seu lado ❤️" },
+        { src: 'assets/fotos/album/foto-019.jpg', legenda: "Você foi, sem dúvida, a melhor coisa que aconteceu na minha vida ❤️" },
+        { src: 'assets/fotos/album/foto-020.jpg', legenda: "Até se assustou quando viu meu bíceps 💪" },
+        { src: 'assets/fotos/album/foto-021.jpg', legenda: "Aquela encarada..." },
+        { src: 'assets/fotos/album/foto-022.jpg', legenda: "Já era, nessa hora eu já estava gamado no beijo da gata." },
+        { src: 'assets/fotos/album/foto-023.jpg', legenda: "depois do beijo ficou toda bobinha ela 🙂‍↔️" },
+        { src: 'assets/fotos/album/foto-024.jpg', legenda: "Após a Novena, merecemos sorvete. Um dia tão especial quanto os outros." },
+        { src: 'assets/fotos/album/foto-025.jpg', legenda: "Intercalamos o sorriso. Essa eu estou sorrindo e você séria (quase)." },
+        { src: 'assets/fotos/album/foto-026.jpg', legenda: "já nessa você sorri e eu 'sério'... e que sorriso lindo esse hein 🥰" },
+        { src: 'assets/fotos/album/foto-027.jpg', legenda: "Grato a Deus por ter você ao meu lado ❤️" },
+        { src: 'assets/fotos/album/foto-028.jpg', legenda: "Não se aguenta e toda hora cai na risada... mds kkkk" },
+        { src: 'assets/fotos/album/foto-029.jpg', legenda: "Pedi um beijo, o beijo veio..." },
+        { src: 'assets/fotos/album/foto-030.jpg', legenda: "então receba outro beijo de volta." },
+        { src: 'assets/fotos/album/foto-031.jpg', legenda: "Casal lindo ❤️" },
+        { src: 'assets/fotos/album/foto-032.jpg', legenda: "Minha princesa ama uma casquinha." },
+        { src: 'assets/fotos/album/foto-033.jpg', legenda: "Alimentando a minha dragãozinha 🍔🧋" },
+        { src: 'assets/fotos/album/foto-034.jpg', legenda: "Nesse dia eu já estava mais que decidido: É ELA 👩🏼‍❤️‍💋‍👨🏽" },
+        { src: 'assets/fotos/album/foto-035.jpg', legenda: "O primeiro buquê de muitos que estão por vir 💐" },
+        { src: 'assets/fotos/album/foto-036.jpg', legenda: "Tão linda assim com um buquê de rosas." },
+        { src: 'assets/fotos/album/foto-037.jpg', legenda: "Você merece minha princesa 💐❤️" },
+        { src: 'assets/fotos/album/foto-038.jpg', legenda: "E o pedido de namoro foi aceito. Enfim, Namorados 😍" },
+        { src: 'assets/fotos/album/foto-039.jpg', legenda: "Primeiro date de namorados. Somos um casal tão bonito." },
+        { src: 'assets/fotos/album/foto-040.jpg', legenda: "Com muito amor 💐" },
+        { src: 'assets/fotos/album/foto-041.jpg', legenda: "Bobinha com o primeiro buquê que recebeu na vida ☺️" },
+        { src: 'assets/fotos/album/foto-042.jpg', legenda: "Até que eu tenho bom gosto para escolher flores, né!?" },
+        { src: 'assets/fotos/album/foto-043.jpg', legenda: "Na fazendinha, fomos combinando." },
+        { src: 'assets/fotos/album/foto-044.jpg', legenda: "Um dia muito especial para nós ❤️" },
+        { src: 'assets/fotos/album/foto-045.jpg', legenda: "Amo tanto você, minha neguinha. O que seria de você sem esse fotógrafo apaixonado que insiste em lotar sua galeria de fotos? ❤️📸🥰" },
+        { src: 'assets/fotos/album/foto-046.jpg', legenda: "Nosso primeiro Réveillon juntos 🎆." },
+        { src: 'assets/fotos/album/foto-047.jpg', legenda: "Finalizamos o ano com chave de ouro. O nosso amor só estava começando 😘" },
+        { src: 'assets/fotos/album/foto-048.jpg', legenda: "Gostamos tanto de um piquenique né!" },
+        { src: 'assets/fotos/album/foto-049.jpg', legenda: "Mais um momento nosso para guardar com carinho ❤️" },
+        { src: 'assets/fotos/album/foto-050.jpg', legenda: "Agora é aguentar né..." },
+        { src: 'assets/fotos/album/foto-051.jpg', legenda: "A surtada surtou... mds" },
+        { src: 'assets/fotos/album/foto-052.jpg', legenda: "mas, no fim das contas, nada que um beijo não resolva, não é mesmo!? ❤️😘" },
+        { src: 'assets/fotos/album/foto-053.jpg', legenda: "Nosso primeiro date entre casal de amigos. Um BRINDE a nós (desculpa kkk)." },
+        { src: 'assets/fotos/album/foto-054.jpg', legenda: "E finalmente as nossas alianças chegaram... mais um capítulo da nossa história juntos. 💍❤️" },
+        { src: 'assets/fotos/album/foto-055.jpg', legenda: "Agora fica toda boba querendo mostrar a aliança para todo mundo ver." },
+        { src: 'assets/fotos/album/foto-056.jpg', legenda: "Mais um date ao seu lado. Nunca me canso da sua companhia, meu amor ❤️" },
+        { src: 'assets/fotos/album/foto-057.jpg', legenda: "A mão de uma dama exibindo uma aliança impecável de tão bonita 💍" },
+        { src: 'assets/fotos/album/foto-058.jpg', legenda: "É... Nós comemos muito mesmo kkk Mas sei que você ama um steak de frango." },
+        { src: 'assets/fotos/album/foto-059.jpg', legenda: "Nossa primeira ida numa festa de aniversário de 15 anos juntos. Estávamos tão elegantes 🙌" },
+        { src: 'assets/fotos/album/foto-060.jpg', legenda: "E a sequência de fotos não param..." },
+        { src: 'assets/fotos/album/foto-061.jpg', legenda: "Eu te amo tanto meu amor ❤️" },
+        { src: 'assets/fotos/album/foto-062.jpg', legenda: "De vestido branco, linda como sempre e elegante como ninguém ❤️🥰" },
+        { src: 'assets/fotos/album/foto-063.jpg', legenda: "Momentos como este ficam ainda mais especiais porque tenho você ao meu lado, meu amor ❤️" },
+        { src: 'assets/fotos/album/foto-064.jpg', legenda: "Tão perfeita que me deixa completamente apaixonado." },
+        { src: 'assets/fotos/album/foto-065.jpg', legenda: "Eu te amo muito minha princesa ❤️" },
+        { src: 'assets/fotos/album/foto-066.jpg', legenda: "Eu te amo muito minha princesa ❤️" },
+        { src: 'assets/fotos/album/foto-067.jpg', legenda: "Eu te amo muito minha princesa ❤️" },
+        { src: 'assets/fotos/album/foto-068.jpg', legenda: "Um beijo seu e eu já fico todo bobo ❤️" },
+        { src: 'assets/fotos/album/foto-069.jpg', legenda: "Minha modelo linda. ❤️📸" },
+        { src: 'assets/fotos/album/foto-070.jpg', legenda: "E a sequência tá começando..." },
+        { src: 'assets/fotos/album/foto-071.jpg', legenda: "Colecionando momentos inesquecíveis ao seu lado ❤️" },
+        { src: 'assets/fotos/album/foto-072.jpg', legenda: "Colecionando momentos inesquecíveis ao seu lado ❤️" },
+        { src: 'assets/fotos/album/foto-073.jpg', legenda: "Colecionando momentos inesquecíveis ao seu lado ❤️" },
+        { src: 'assets/fotos/album/foto-074.jpg', legenda: "Colecionando momentos inesquecíveis ao seu lado ❤️" },
+        { src: 'assets/fotos/album/foto-075.jpg', legenda: "A típica frase: \"huum estou com uma vontade de comer um peixinho frito\" 🐟" },
+        { src: 'assets/fotos/album/foto-076.jpg', legenda: "A felicidade da minha dragãozinha tem nome: comida. ❤️😂" },
+        { src: 'assets/fotos/album/foto-077.jpg', legenda: "Participando de um casamento tão bonito." },
+        { src: 'assets/fotos/album/foto-078.jpg', legenda: "Nunca me canso de registrar os momentos incríveis que estamos juntos 🥰" },
+        { src: 'assets/fotos/album/foto-079.jpg', legenda: "Você fica mais perfeita ainda quando usa vestidos ❤️👗" },
+        { src: 'assets/fotos/album/foto-080.jpg', legenda: "Mais um date para registrado 📸" },
+        { src: 'assets/fotos/album/foto-081.jpg', legenda: "Casal fitness e combinando ❤️💪" },
+        { src: 'assets/fotos/album/foto-082.jpg', legenda: "Uma flor para a minha flor 🌺" },
+        { src: 'assets/fotos/album/foto-083.jpg', legenda: "Toda animada só porque estou treinando junto 🤭" },
+        { src: 'assets/fotos/album/foto-084.jpg', legenda: "Só porque você gosta dos meus bíceps 💪💪" },
+        { src: 'assets/fotos/album/foto-085.jpg', legenda: "A gente combina até na academia oia 😂" },
+        { src: 'assets/fotos/album/foto-086.jpg', legenda: "Relembrando a festa de 15 anos e como estávamos lindos e elegantes juntos. ❤️🥰" },
+        { src: 'assets/fotos/album/foto-087.jpg', legenda: "Eu te amo minha princesa ❤️" },
+        { src: 'assets/fotos/album/foto-088.jpg', legenda: "E depois de tudo isso, uma certeza continua a mesma: sou muito feliz ao seu lado ❤️" }
+      ]
+    };
+    document.title = `Nossa História de Amor | ${CONFIG_AMOR.nomeDela}`;
+    document.querySelectorAll('[data-seu-nome]').forEach(el => el.textContent = CONFIG_AMOR.seuNome);
+
+    function calcularTempoDetalhado(inicio, agora) {
+      let anos = agora.getFullYear() - inicio.getFullYear();
+      let meses = agora.getMonth() - inicio.getMonth();
+      let dias = agora.getDate() - inicio.getDate();
+
+      if (dias < 0) {
+        meses--;
+        const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+        dias += ultimoDiaMesAnterior;
+      }
+
+      if (meses < 0) {
+        anos--;
+        meses += 12;
+      }
+
+      const horas = agora.getHours();
+      const minutos = agora.getMinutes();
+      const segundos = agora.getSeconds();
+
+      return { anos, meses, dias, horas, minutos, segundos };
+    }
+
+    function atualizarContadorAmor() {
+      const inicio = new Date(CONFIG_AMOR.dataInicio);
+      const agora = new Date();
+      const t = calcularTempoDetalhado(inicio, agora);
+
+      const contador = document.getElementById('loveCounter');
+
+      contador.innerHTML = `
+        <span><strong>${t.anos}</strong><small>anos</small></span>
+        <span><strong>${t.meses}</strong><small>meses</small></span>
+        <span><strong>${t.dias}</strong><small>dias</small></span>
+        <span><strong>${t.horas}</strong><small>horas</small></span>
+        <span><strong>${t.minutos}</strong><small>min</small></span>
+        <span><strong>${t.segundos}</strong><small>seg</small></span>
+      `;
+    }
+
+    setInterval(atualizarContadorAmor, 1000);
+    atualizarContadorAmor();
+
+    const cinemaLoader = document.getElementById('cinemaLoader');
+    const loaderText = document.getElementById('loaderText');
+
+    const frasesLoader = [
+      'Algumas histórias merecem ser lembradas para sempre...',
+      'O amor mora nos detalhes...',
+      'Essa surpresa foi feita com carinho para você...'
+    ];
+
+    let fraseAtual = 0;
+    let letraAtual = 0;
+
+    function escreverLoader() {
+      if (fraseAtual >= frasesLoader.length) {
+        setTimeout(() => cinemaLoader.classList.add('hidden'), 1200);
+        return;
+      }
+
+      const frase = frasesLoader[fraseAtual];
+      loaderText.textContent = frase.slice(0, letraAtual++);
+
+      if (letraAtual <= frase.length) {
+        setTimeout(escreverLoader, 42);
+      } else {
+        fraseAtual++;
+        letraAtual = 0;
+        setTimeout(() => {
+          loaderText.textContent = '';
+          escreverLoader();
+        }, 1300);
+      }
+    }
+
+    escreverLoader();
+
+    const intro = document.getElementById('intro');
+    const openSurprise = document.getElementById('openSurprise');
+    const loveMusic = document.getElementById('loveMusic');
+    const musicPlayer = document.getElementById('musicPlayer');
+    const toggleMusic = document.getElementById('toggleMusic');
+    const musicProgressBar = document.getElementById('musicProgressBar');
+    const musicCover = document.getElementById('musicCover');
+    const playFromHero = document.getElementById('playFromHero');
+    const heartsLayer = document.getElementById('heartsLayer');
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = Math.random() > 0.5 ? '♥' : '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
+      heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+      heart.style.opacity = String(Math.random() * 0.6 + 0.25);
+      heartsLayer.appendChild(heart);
+      setTimeout(() => heart.remove(), 11000);
+    }
+
+    setInterval(createHeart, 650);
+
+    loveMusic.addEventListener('timeupdate', () => {
+      if (!loveMusic.duration) return;
+      const percent = (loveMusic.currentTime / loveMusic.duration) * 100;
+      if (musicProgressBar) musicProgressBar.style.width = percent + '%';
+    });
+
+    function tryPlayMusic() {
+      loveMusic.play().then(() => {
+        toggleMusic.textContent = '❚❚';
+        if (musicCover) musicCover.classList.add('playing');
+      }).catch(() => {
+        toggleMusic.textContent = '♪';
+      });
+    }
+
+    openSurprise.addEventListener('click', () => {
+      intro.classList.add('hidden');
+      document.body.classList.remove('locked');
+      musicPlayer.classList.add('show');
+      // A música NÃO começa automaticamente.
+      // Ela só começa quando clicar em "Tocar nossa música".
+      setTimeout(() => document.getElementById('inicio').scrollIntoView(), 400);
+    });
+
+    playFromHero.addEventListener('click', tryPlayMusic);
+
+    toggleMusic.addEventListener('click', () => {
+      if (loveMusic.paused) {
+        tryPlayMusic();
+      } else {
+        loveMusic.pause();
+        toggleMusic.textContent = '♪';
+        if (musicCover) musicCover.classList.remove('playing');
+      }
+    });
+
+    const mensagensSecretas = {
+      saudade: 'Mesmo quando existe distância, meu carinho continua indo até você. Saudade também é uma forma bonita do coração dizer que encontrou alguém especial.',
+      triste: 'Se algum dia o mundo parecer pesado, lembra que você nunca está sozinha. Você é importante, amada e muito especial para mim.',
+      amor: 'Entre tantas coincidências da vida, encontrar você foi uma das coisas mais bonitas que já me aconteceu.'
+    };
+
+    document.querySelectorAll('.secret-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const key = card.dataset.secret;
+        const box = document.getElementById('secretMessage');
+
+        box.style.display = 'block';
+        box.innerHTML = mensagensSecretas[key];
+        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+
+    const openFinalMessage = document.getElementById('openFinalMessage');
+    const ultimateMessage = document.getElementById('ultimateMessage');
+
+    if (openFinalMessage && ultimateMessage) {
+      openFinalMessage.addEventListener('click', () => {
+        ultimateMessage.style.display = 'block';
+        ultimateMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    document.querySelectorAll('.reveal').forEach(button => {
+      button.addEventListener('click', () => {
+        button.classList.toggle('active');
+      });
+    });
+
+    let fotoAtualLightbox = 0;
+
+    function abrirFotoLightbox(index) {
+      const lightbox = document.getElementById('photoLightbox');
+      const img = document.getElementById('photoLightboxImage');
+      const caption = document.getElementById('photoLightboxCaption');
+      const finalBtn = document.getElementById('continueStoryFromGallery');
+      if (!lightbox || !img || !caption) return;
+
+      const foto = CONFIG_AMOR.galeriaCompleta[index];
+      if (!foto) return;
+
+      fotoAtualLightbox = index;
+      img.src = foto.src;
+      img.alt = `Foto ampliada ${index + 1}`;
+      caption.textContent = foto.legenda || 'Nossa lembrança especial.';
+      if (finalBtn) finalBtn.classList.toggle('show', index === CONFIG_AMOR.galeriaCompleta.length - 1);
+      lightbox.classList.add('show');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharFotoLightbox() {
+      const lightbox = document.getElementById('photoLightbox');
+      const img = document.getElementById('photoLightboxImage');
+      if (!lightbox) return;
+
+      lightbox.classList.remove('show');
+      lightbox.setAttribute('aria-hidden', 'true');
+      if (img) img.src = '';
+      const finalBtn = document.getElementById('continueStoryFromGallery');
+      if (finalBtn) finalBtn.classList.remove('show');
+      document.body.style.overflow = fullGalleryModal && fullGalleryModal.classList.contains('show') ? 'hidden' : '';
+    }
+
+    function navegarFotoLightbox(direcao) {
+      const total = CONFIG_AMOR.galeriaCompleta.length;
+      if (!total) return;
+      const proximoIndex = (fotoAtualLightbox + direcao + total) % total;
+      abrirFotoLightbox(proximoIndex);
+    }
+
+    function montarGaleriaCompleta() {
+      const grid = document.getElementById('fullGalleryGrid');
+      if (!grid) return;
+
+      grid.innerHTML = '';
+
+      CONFIG_AMOR.galeriaCompleta.forEach((foto, index) => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'full-gallery-photo';
+        item.setAttribute('aria-label', `Abrir foto ${index + 1}`);
+
+        item.innerHTML = `
+          <img src="${foto.src}" alt="Foto especial ${index + 1}" loading="lazy" onerror="this.parentElement.style.display='none'">
+          <span>${foto.legenda || 'Nossa lembrança especial.'}</span>
+        `;
+
+        item.addEventListener('click', () => abrirFotoLightbox(index));
+        grid.appendChild(item);
+      });
+    }
+
+    montarGaleriaCompleta();
+
+    const openFullGalleryBtn = document.getElementById('openFullGalleryBtn');
+    const closeFullGalleryBtn = document.getElementById('closeFullGalleryBtn');
+    const fullGalleryModal = document.getElementById('fullGalleryModal');
+
+    if (openFullGalleryBtn && closeFullGalleryBtn && fullGalleryModal) {
+      openFullGalleryBtn.addEventListener('click', () => {
+        fullGalleryModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeFullGalleryBtn.addEventListener('click', () => {
+        fullGalleryModal.classList.remove('show');
+        document.body.style.overflow = '';
+      });
+
+      fullGalleryModal.addEventListener('click', (event) => {
+        if (event.target === fullGalleryModal) {
+          fullGalleryModal.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    const photoLightbox = document.getElementById('photoLightbox');
+    const closePhotoLightbox = document.getElementById('closePhotoLightbox');
+    const prevPhotoLightbox = document.getElementById('prevPhotoLightbox');
+    const nextPhotoLightbox = document.getElementById('nextPhotoLightbox');
+
+    if (closePhotoLightbox) {
+      closePhotoLightbox.addEventListener('click', fecharFotoLightbox);
+    }
+
+    if (prevPhotoLightbox) {
+      prevPhotoLightbox.addEventListener('click', () => navegarFotoLightbox(-1));
+    }
+
+    if (nextPhotoLightbox) {
+      nextPhotoLightbox.addEventListener('click', () => navegarFotoLightbox(1));
+    }
+
+    if (photoLightbox) {
+      photoLightbox.addEventListener('click', (event) => {
+        if (event.target === photoLightbox) fecharFotoLightbox();
+      });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (!photoLightbox || !photoLightbox.classList.contains('show')) return;
+      if (event.key === 'Escape') fecharFotoLightbox();
+      if (event.key === 'ArrowLeft') navegarFotoLightbox(-1);
+      if (event.key === 'ArrowRight') navegarFotoLightbox(1);
+    });
+
+
+
+    const continueStoryFromGallery = document.getElementById('continueStoryFromGallery');
+
+    if (continueStoryFromGallery) {
+      continueStoryFromGallery.addEventListener('click', () => {
+        fecharFotoLightbox();
+        if (fullGalleryModal) fullGalleryModal.classList.remove('show');
+        document.body.style.overflow = '';
+        document.getElementById('final')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    const replayStory = document.getElementById('replayStory');
+
+    if (replayStory) {
+      replayStory.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('photo-focus');
+      });
+    });
+
+    // Segurança: se algum navegador falhar com IntersectionObserver,
+    // as seções aparecem mesmo assim.
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    window.addEventListener('error', () => {
+      document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+    });
+  </script>
+</body>
+</html>
